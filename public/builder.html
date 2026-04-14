@@ -286,7 +286,8 @@ function saveResume() {
 
         // Save to Database via API
         try {
-            await fetch('/api/resumes', {
+            const apiBaseUrl = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+            await fetch(apiBaseUrl + '/api/resumes', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ username: user, resumeData: data })

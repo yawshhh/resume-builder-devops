@@ -343,7 +343,8 @@ if (!user) {
 
 let data;
 try {
-  let res = await fetch('/api/resumes/' + user);
+  const apiBaseUrl = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+  let res = await fetch(apiBaseUrl + '/api/resumes/' + user);
   let result = await res.json();
   if(result.success && result.resumes && result.resumes.length > 0) {
       let viewIndex = parseInt(localStorage.getItem("viewResumeIndex"));
