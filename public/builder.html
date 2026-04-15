@@ -282,10 +282,12 @@ function saveResume() {
         resumes.push(data);
         localStorage.setItem("resumes_" + user, JSON.stringify(resumes));
         localStorage.setItem("resume_" + user, JSON.stringify(data));
+        localStorage.setItem("viewResumeIndex", resumes.length - 1);
 
         // Save to Database via API
         try {
-            await fetch('/api/resumes', {
+            const apiBaseUrl = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+            await fetch(apiBaseUrl + '/api/resumes', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ username: user, resumeData: data })
