@@ -82,6 +82,9 @@
   <div id="login-form" style="display:none; margin-top:20px;">
     <input type="text" placeholder="Username" id="login-username" />
     <input type="password" placeholder="Password" id="login-password" />
+    <div style="text-align: right; margin-top: -10px; margin-bottom: 10px;">
+      <a href="#" onclick="showForgotPassword()" style="font-size: 0.85em; color: #c00; text-decoration: none;">Forgot Password?</a>
+    </div>
     <button class="btn-red" onclick="handleLogin()">Login</button>
   </div>
 
@@ -90,17 +93,32 @@
     <input type="password" placeholder="Password" id="signup-password" />
     <button class="btn-red" onclick="handleSignUp()">Sign Up</button>
   </div>
+
+  <div id="forgot-password-form" style="display:none; margin-top:20px;">
+    <input type="text" placeholder="Username" id="forgot-username" />
+    <input type="password" placeholder="New Password" id="forgot-password" />
+    <button class="btn-red" onclick="handleResetPassword()">Reset Password</button>
+    <button class="btn-gray" onclick="showLogin()">Back to Login</button>
+  </div>
 </div>
 
 <script>
   function showLogin() {
     document.getElementById('login-form').style.display = 'block';
     document.getElementById('signup-form').style.display = 'none';
+    document.getElementById('forgot-password-form').style.display = 'none';
   }
 
   function showSignUp() {
     document.getElementById('signup-form').style.display = 'block';
     document.getElementById('login-form').style.display = 'none';
+    document.getElementById('forgot-password-form').style.display = 'none';
+  }
+
+  function showForgotPassword() {
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('signup-form').style.display = 'none';
+    document.getElementById('forgot-password-form').style.display = 'block';
   }
 
 async function handleLogin() {
@@ -141,6 +159,33 @@ async function handleSignUp() {
             
             if (response.ok) {
                 alert("Account created! Now login.");
+                showLogin();
+            } else {
+                alert("Error: " + data.error);
+            }
+        } catch (err) {
+            alert("Server error!");
+        }
+    } else {
+        alert("Please fill all fields");
+    }
+}
+
+async function handleResetPassword() {
+    let user = document.getElementById("forgot-username").value;
+    let newPass = document.getElementById("forgot-password").value;
+
+    if (user && newPass) {
+        try {
+            const response = await fetch('/api/reset-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: user, newPassword: newPass })
+            });
+            const data = await response.json();
+            
+            if (response.ok) {
+                alert("Password reset successfully! Now login.");
                 showLogin();
             } else {
                 alert("Error: " + data.error);
