@@ -61,150 +61,159 @@
 </div>
 
 <form>
+  <!-- CORE FIELDS (Always shown) -->
   <div class="row">
-    <div class="form-group">
+    <div class="form-group" id="field-firstName">
       <label for="firstName">First Name</label>
       <input type="text" id="firstName" name="firstName" placeholder="First Name" />
     </div>
-    <div class="form-group">
-      <label for="middleName">Middle Name (Optional)</label>
-      <input type="text" id="middleName" name="middleName" placeholder="Middle Name" />
-    </div>
-    <div class="form-group">
+    <div class="form-group" id="field-lastName">
       <label for="lastName">Last Name</label>
       <input type="text" id="lastName" name="lastName" placeholder="Last Name" />
     </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group">
-      <label for="gender">Gender (Optional)</label>
-      <select id="gender" name="gender">
-        <option value="">Select</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="other">Other</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="dob">Date of Birth (Optional)</label>
-      <input type="date" id="dob" name="dob" />
-    </div>
-    <div class="form-group">
-      <label for="maritalStatus">Marital Status (Optional)</label>
-      <select id="maritalStatus" name="maritalStatus">
-        <option value="">Select</option>
-        <option value="single">Single</option>
-        <option value="married">Married</option>
-        <option value="divorced">Divorced</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group">
+    <div class="form-group" id="field-profession">
       <label for="profession">Profession</label>
-      <input type="text" id="profession" name="profession" placeholder="e.g. Sr. Accountant" />
-    </div>
-    <div class="form-group">
-      <label for="streetAddress">Street Address</label>
-      <input type="text" id="streetAddress" name="streetAddress" placeholder="Street Address" />
+      <input type="text" id="profession" name="profession" placeholder="e.g. Software Engineer" />
     </div>
   </div>
 
   <div class="row">
-    <div class="form-group">
-      <label for="city">City</label>
-      <input type="text" id="city" name="city" placeholder="City" />
-    </div>
-    <div class="form-group">
-      <label for="state">State/Province</label>
-      <select id="state" name="state" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-        <option value="">Select State</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="nationality">Nationality (Optional)</label>
-      <select id="nationality" name="nationality">
-        <option value="">Select Country</option>
-        <!-- Add country options here -->
-      </select>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="form-group">
-      <label for="passport">Passport Number (Optional)</label>
-      <input type="text" id="passport" name="passport" placeholder="Passport Number" />
-    </div>
-    <div class="form-group">
-      <label for="phone">Phone</label>
-      <input type="text" id="phone" name="phone" placeholder="Phone" />
-    </div>
-    <div class="form-group">
+    <div class="form-group" id="field-email">
       <label for="email">Email</label>
       <input type="text" id="email" name="email" placeholder="Email" />
     </div>
+    <div class="form-group" id="field-phone">
+      <label for="phone">Phone</label>
+      <input type="text" id="phone" name="phone" placeholder="Phone" />
+    </div>
+    <div class="form-group" id="field-streetAddress">
+      <label for="streetAddress">Full Address</label>
+      <input type="text" id="streetAddress" name="streetAddress" placeholder="123 Street, City, State" />
+    </div>
+    <div class="form-group" id="field-city" style="display:none;">
+      <label for="city">City/Locality</label>
+      <input type="text" id="city" name="city" placeholder="Denver, CO" />
+    </div>
   </div>
 
-  <div id="professional-fields" style="display: none; background: #eef2f7; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-    <h3 style="margin-top: 0;">Professional Details</h3>
-    <div class="row">
-      <div class="form-group" style="flex:1;">
-        <label for="profileSummary">Profile Summary</label>
-        <textarea id="profileSummary" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" rows="3" placeholder="Brief summary about yourself..."></textarea>
-      </div>
+  <!-- SOCIAL / LINKS -->
+  <div class="row">
+    <div class="form-group" id="field-linkedin" style="display: none;">
+      <label for="linkedin">LinkedIn</label>
+      <input type="text" id="linkedin" name="linkedin" placeholder="linkedin.com/in/..." />
     </div>
-    <div class="row">
-      <div class="form-group">
-        <label for="profSkills">Skills (Comma Separated)</label>
-        <input type="text" id="profSkills" placeholder="e.g. Java, Python, SQL" />
-      </div>
-      <div class="form-group">
-        <label for="profLanguages">Languages (Comma Separated)</label>
-        <input type="text" id="profLanguages" placeholder="e.g. English, Spanish" />
-      </div>
-      <div class="form-group">
-        <label for="profHobbies">Hobbies (Comma Separated)</label>
-        <input type="text" id="profHobbies" placeholder="e.g. Reading, Traveling" />
-      </div>
+    <div class="form-group" id="field-portfolio" style="display: none;">
+      <label for="portfolio">Portfolio</label>
+      <input type="text" id="portfolio" name="portfolio" placeholder="www.yoursite.com" />
     </div>
-    <h4 style="margin-bottom:10px;">Work Experience</h4>
+    <div class="form-group" id="field-facebook" style="display: none;">
+      <label for="facebook">Facebook</label>
+      <input type="text" id="facebook" name="facebook" placeholder="facebook.com/..." />
+    </div>
+    <div class="form-group" id="field-twitter" style="display: none;">
+      <label for="twitter">Twitter</label>
+      <input type="text" id="twitter" name="twitter" placeholder="twitter.com/..." />
+    </div>
+  </div>
+
+  <!-- INTRO / ABOUT -->
+  <div class="row">
+    <div class="form-group" id="field-profileSummary" style="display: none; flex:1;">
+      <label for="profileSummary">About Me / Profile Summary</label>
+      <textarea id="profileSummary" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" rows="3" placeholder="Brief summary about yourself..."></textarea>
+    </div>
+    <div class="form-group" id="field-objective" style="display: none; flex:1;">
+      <label for="objective">Objective</label>
+      <textarea id="objective" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" rows="3" placeholder="A highly motivated..."></textarea>
+    </div>
+  </div>
+
+  <!-- PROFESSIONAL GROUPS (Always shown depending on logic) -->
+  <div id="professional-fields" style="background: #eef2f7; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+    <h4 style="margin-top:0;">Work Experience</h4>
     <div class="row">
-      <div class="form-group">
+      <div class="form-group" id="field-jobTitle">
         <label for="jobTitle">Job Title</label>
         <input type="text" id="jobTitle" placeholder="e.g. Senior Developer" />
       </div>
-      <div class="form-group">
+      <div class="form-group" id="field-jobCompany">
         <label for="jobCompany">Company & Location</label>
         <input type="text" id="jobCompany" placeholder="e.g. Tech Corp - USA" />
       </div>
-      <div class="form-group">
+      <div class="form-group" id="field-jobDates">
         <label for="jobDates">Dates</label>
         <input type="text" id="jobDates" placeholder="e.g. Jan 2020 - Present" />
       </div>
     </div>
     <div class="row">
-      <div class="form-group" style="flex:1;">
-        <label for="jobDesc">Job Responsibilities</label>
-        <textarea id="jobDesc" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" rows="3" placeholder="Bullet points or summary of duties..."></textarea>
+      <div class="form-group" id="field-jobDesc" style="flex:1;">
+        <label for="jobDesc">Job Responsibilities (Use \n for line breaks)</label>
+        <textarea id="jobDesc" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" rows="3" placeholder="Bullet points..."></textarea>
       </div>
     </div>
+    
+    <hr>
     <h4 style="margin-bottom:10px;">Education</h4>
     <div class="row">
-      <div class="form-group">
+      <div class="form-group" id="field-eduDegree">
         <label for="eduDegree">Degree</label>
         <input type="text" id="eduDegree" placeholder="e.g. B.S. Computer Science" />
       </div>
-      <div class="form-group">
+      <div class="form-group" id="field-eduSchool">
         <label for="eduSchool">School / University</label>
         <input type="text" id="eduSchool" placeholder="e.g. XYZ University" />
       </div>
-      <div class="form-group">
-        <label for="eduDates">Dates</label>
+      <div class="form-group" id="field-eduDates">
+        <label for="eduDates">Dates / Year</label>
         <input type="text" id="eduDates" placeholder="e.g. Sep 2015 - May 2019" />
       </div>
     </div>
+
+    <hr>
+    <h4 style="margin-bottom:10px;">Attributes & Skills</h4>
+    <div class="row">
+      <div class="form-group" id="field-skills" style="display: none; flex: 1;">
+        <label for="profSkills">Skills</label>
+        <textarea id="profSkills" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" rows="3" placeholder="e.g. Java, Python, SQL (Use \n for line breaks)"></textarea>
+      </div>
+      <div class="form-group" id="field-languages" style="display: none; flex: 1;">
+        <label for="profLanguages">Languages</label>
+        <textarea id="profLanguages" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" rows="3" placeholder="e.g. English, Spanish (Use \n for line breaks)"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group" id="field-hobbies" style="display: none;">
+        <label for="profHobbies">Hobbies / Interests</label>
+        <input type="text" id="profHobbies" placeholder="e.g. Reading, Traveling" />
+      </div>
+      <div class="form-group" id="field-certifications" style="display: none;">
+        <label for="profCertifications">Certifications</label>
+        <input type="text" id="profCertifications" placeholder="e.g. Certified AI Professional (Use \n to separate)" />
+      </div>
+      <div class="form-group" id="field-licenses" style="display: none;">
+        <label for="profLicenses">Licenses</label>
+        <input type="text" id="profLicenses" placeholder="e.g. Reigstered Nurse (C-OB)" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group" id="field-projects" style="display: none; flex:1;">
+        <label for="profProjects">Projects</label>
+        <textarea id="profProjects" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" rows="3" placeholder="Describe your projects (Use \n for line breaks)"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group" id="field-activities" style="display: none; flex:1;">
+        <label for="profActivities">Activities</label>
+        <textarea id="profActivities" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" rows="2" placeholder="Describe your activities..."></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group" id="field-references" style="display: none; flex:1;">
+        <label for="profReferences">References</label>
+        <input type="text" id="profReferences" placeholder="e.g. Available upon request." />
+      </div>
+    </div>
+
   </div>
 
   <div class="row" id="photo-row" style="display: none;">
@@ -249,9 +258,20 @@ function saveResume() {
         
         // Professional optional fields properly extracted
         profileSummary: document.getElementById("profileSummary") ? document.getElementById("profileSummary").value : "",
+        objective: document.getElementById("objective") ? document.getElementById("objective").value : "",
+        linkedin: document.getElementById("linkedin") ? document.getElementById("linkedin").value : "",
+        facebook: document.getElementById("facebook") ? document.getElementById("facebook").value : "",
+        twitter: document.getElementById("twitter") ? document.getElementById("twitter").value : "",
+        portfolio: document.getElementById("portfolio") ? document.getElementById("portfolio").value : "",
         skills: document.getElementById("profSkills") ? document.getElementById("profSkills").value : "",
         languages: document.getElementById("profLanguages") ? document.getElementById("profLanguages").value : "",
         hobbies: document.getElementById("profHobbies") ? document.getElementById("profHobbies").value : "",
+        projects: document.getElementById("profProjects") ? document.getElementById("profProjects").value : "",
+        certifications: document.getElementById("profCertifications") ? document.getElementById("profCertifications").value : "",
+        licenses: document.getElementById("profLicenses") ? document.getElementById("profLicenses").value : "",
+        activities: document.getElementById("profActivities") ? document.getElementById("profActivities").value : "",
+        references: document.getElementById("profReferences") ? document.getElementById("profReferences").value : "",
+        
         jobTitle: document.getElementById("jobTitle") ? document.getElementById("jobTitle").value : "",
         jobCompany: document.getElementById("jobCompany") ? document.getElementById("jobCompany").value : "",
         jobDates: document.getElementById("jobDates") ? document.getElementById("jobDates").value : "",
@@ -301,22 +321,54 @@ function saveResume() {
 }
 
 // ✅ Protect page
+// ✅ Protect page & Toggle Fields dynamically based on template
 window.onload = function () {
     let user = localStorage.getItem("loggedInUser");
 
     if (!user) {
         alert("Please login first!");
         window.location.href = "index.html";
+        return;
     }
 
     let template = localStorage.getItem("selectedTemplate");
-    if (template === "template3") {
-        document.getElementById("photo-row").style.display = "flex";
-        document.getElementById("professional-fields").style.display = "block";
-    } else if (template === "template2" || template === "template1") {
-        document.getElementById("professional-fields").style.display = "block";
-    }
+    applyTemplateConstraints(template);
 };
+
+function applyTemplateConstraints(template) {
+    const allFields = [
+        "photo-row", "field-objective", "field-profileSummary", 
+        "field-linkedin", "field-facebook", "field-twitter", "field-portfolio",
+        "field-languages", "field-hobbies", "field-skills",
+        "field-projects", "field-certifications", "field-references",
+        "field-licenses", "field-activities", "field-city", "field-streetAddress"
+    ];
+
+    allFields.forEach(id => {
+        let el = document.getElementById(id);
+        if (el) el.style.display = "none";
+    });
+
+    let showFields = [];
+    if (template === "template1") {
+        showFields = ["field-portfolio", "field-languages", "field-hobbies", "field-skills", "field-streetAddress"];
+    } else if (template === "template2") {
+        showFields = ["field-linkedin", "field-profileSummary", "field-skills", "field-streetAddress"];
+    } else if (template === "template3") {
+        showFields = ["photo-row", "field-profileSummary", "field-languages", "field-hobbies", "field-skills", "field-streetAddress", "field-city"];
+    } else if (template === "template4") { // Emily Carter
+        showFields = ["photo-row", "field-linkedin", "field-objective", "field-languages", "field-hobbies", "field-projects", "field-certifications", "field-references", "field-skills", "field-streetAddress", "field-profileSummary"];
+    } else if (template === "template5") { // Rhoda Jackson
+        showFields = ["field-linkedin", "field-skills", "field-city", "field-streetAddress"];
+    } else if (template === "template6") { // Kaida Kim
+        showFields = ["field-linkedin", "field-facebook", "field-twitter", "field-licenses", "field-activities", "field-skills", "field-city"];
+    }
+
+    showFields.forEach(id => {
+        let el = document.getElementById(id);
+        if (el) el.style.display = "flex"; 
+    });
+}
 
 // ✅ Fetch Countries and States from free public API
 let globalCountryData = [];

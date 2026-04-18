@@ -107,8 +107,10 @@ async function handleLogin() {
     let user = document.getElementById("login-username").value;
     let pass = document.getElementById("login-password").value;
 
+    const apiBaseUrl = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+
     try {
-        const response = await fetch('/api/login', {
+        const response = await fetch(apiBaseUrl + '/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: user, password: pass })
@@ -130,9 +132,11 @@ async function handleSignUp() {
     let user = document.getElementById("signup-username").value;
     let pass = document.getElementById("signup-password").value;
 
+    const apiBaseUrl = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+
     if (user && pass) {
         try {
-            const response = await fetch('/api/register', {
+            const response = await fetch(apiBaseUrl + '/api/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username: user, password: pass })

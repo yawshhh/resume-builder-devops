@@ -121,42 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         }
     }
-    window.onload = function () {
-        let user = localStorage.getItem("loggedInUser");
-
-        if (!user) {
-            alert("Please login first!");
-            window.location.href = "resume.html";
-        } else {
-            displayResume();
-           loadResumes(); 
-           loadServices();
-           loadBlogs();   
-           loadJobs();
-        }
-    };
     function openBuilder() {
         window.location.href = "builder.html";
     }
     // Additional scripts can be added here for dashboard interactions
 });
-function loadResumes() {
-  let html = "";
-
-  if (typeof resumes === "undefined") return;
-
-  resumes.forEach((resume, index) => {
-    html += `
-      <div style="border:1px solid #ccc; padding:10px; margin:10px;">
-        <h3>${resume.name}</h3>
-        <p>${resume.title}</p>
-        <small>${resume.date}</small>
-      </div>
-    `;
-  });
-
-  let container = document.getElementById("resumeList");
-  if (container) {
-    container.innerHTML = html;
-  }
-}
