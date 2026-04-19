@@ -1,110 +1,140 @@
+require("dotenv").config();
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose'); // ✅ added
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DATA_FILE = path.join(__dirname, 'data.json');
 
+// ✅ MongoDB connection
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("MongoDB connected"))
+    .catch(err => console.log(err));
+
 app.use(cors());
 // Set a larger body limit because resumes can contain 2MB+ base64 encoded profile photos
-app.use(bodyParser.json({limit: '20mb'})); 
+app.use(bodyParser.json({ limit: '20mb' }));
 app.use(express.static('public'));
 
-// Load data helper
-const loadData = () => {
-    if (!fs.existsSync(DATA_FILE)) {
-        return { users: [], resumes: {} };
-    }
-    try {
-        const raw = fs.readFileSync(DATA_FILE);
-        return JSON.parse(raw);
-    } catch(err) {
-        return { users: [], resumes: {} };
-    }
-};
+// ---------------- DATABASE SCHEMAS ----------------
 
-// Save data helper
-const saveData = (data) => {
-    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
-};
+const UserSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
+});
+
+const ResumeSchema = new mongoose.Schema({
+    username: { type: String, required: true },
+    resumeData: { type: mongoose.Schema.Types.Mixed, required: true }
+});
+
+const User = mongoose.model('User', UserSchema);
+const Resume = mongoose.model('Resume', ResumeSchema);
+
+// ---------------- APIs ----------------
 
 // API: Register
-app.post('/api/register', (req, res) => {
-    const { username, password } = req.body;
-    if(!username || !password) return res.status(400).json({ error: 'Missing username or password' });
-    
-    let data = loadData();
-    if (data.users.find(u => u.username === username)) {
-        return res.status(400).json({ error: 'User already exists' });
+app.post('/api/register', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        if (!username || !password)
+            return res.status(400).json({ error: 'Missing username or password' });
+
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({ error: 'User already exists' });
+        }
+
+        const newUser = new User({ username, password });
+        await newUser.save();
+
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Database error' });
     }
-    data.users.push({ username, password });
-    saveData(data);
-    res.json({ success: true });
 });
 
 // API: Login
-app.post('/api/login', (req, res) => {
-    const { username, password } = req.body;
-    if(!username || !password) return res.status(400).json({ error: 'Missing username or password' });
+app.post('/api/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        if (!username || !password)
+            return res.status(400).json({ error: 'Missing username or password' });
 
-    let data = loadData();
-    let user = data.users.find(u => u.username === username && u.password === password);
-    if (user) {
-        res.json({ success: true, username: username });
-    } else {
-        res.status(401).json({ error: 'Invalid credentials' });
+        const user = await User.findOne({ username, password });
+
+        if (user) {
+            res.json({ success: true, username });
+        } else {
+            res.status(401).json({ error: 'Invalid credentials' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Database error' });
     }
 });
 
 // API: Reset Password
-app.post('/api/reset-password', (req, res) => {
-    const { username, newPassword } = req.body;
-    if(!username || !newPassword) return res.status(400).json({ error: 'Missing username or new password' });
+app.post('/api/reset-password', async (req, res) => {
+    try {
+        const { username, newPassword } = req.body;
+        if (!username || !newPassword)
+            return res.status(400).json({ error: 'Missing username or new password' });
 
-    let data = loadData();
-    let user = data.users.find(u => u.username === username);
-    if (user) {
-        user.password = newPassword;
-        saveData(data);
-        res.json({ success: true });
-    } else {
-        res.status(404).json({ error: 'User not found' });
+        const user = await User.findOne({ username });
+
+        if (user) {
+            user.password = newPassword;
+            await user.save();
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Database error' });
     }
 });
 
 // API: Save Resume
-app.post('/api/resumes', (req, res) => {
-    const { username, resumeData } = req.body;
-    if (!username || !resumeData) return res.status(400).json({ error: 'Missing data' });
-    
-    let data = loadData();
-    if (!data.resumes[username]) {
-        data.resumes[username] = [];
-    } else if (!Array.isArray(data.resumes[username])) {
-        data.resumes[username] = [data.resumes[username]];
+app.post('/api/resumes', async (req, res) => {
+    try {
+        const { username, resumeData } = req.body;
+        if (!username || !resumeData)
+            return res.status(400).json({ error: 'Missing data' });
+
+        const newResume = new Resume({ username, resumeData });
+        await newResume.save();
+
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Database error' });
     }
-    data.resumes[username].push(resumeData);
-    saveData(data);
-    res.json({ success: true });
 });
 
 // API: Get Resume
-app.get('/api/resumes/:username', (req, res) => {
-    const { username } = req.params;
-    let data = loadData();
-    let resumes = data.resumes[username];
-    if (resumes) {
-        if (!Array.isArray(resumes)) {
-            resumes = [resumes];
-        }
-        res.json({ success: true, resumes: resumes });
-    } else {
-        res.json({ success: true, resumes: [] });
+app.get('/api/resumes/:username', async (req, res) => {
+    try {
+        const { username } = req.params;
+
+        const docs = await Resume.find({ username });
+        const resumes = docs.map(doc => doc.resumeData);
+
+        res.json({ success: true, resumes });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Database error' });
     }
 });
+
+// ---------------- START SERVER ----------------
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
