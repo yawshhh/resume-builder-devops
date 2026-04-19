@@ -123,25 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         }
     }
-    window.onload = function () {
-        let user = localStorage.getItem("loggedInUser");
-
-        if (!user) {
-            alert("Please login first!");
-            window.location.href = "resume.html";
-        } else {
-            displayResume();
-           loadResumes(); 
-           loadServices();
-           loadBlogs();   
-           loadJobs();
-        }
-    };
     function openBuilder() {
         window.location.href = "builder.html";
     }
     // Additional scripts can be added here for dashboard interactions
 });
+
 function loadResumes() {
   let html = "";
 

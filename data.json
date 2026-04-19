@@ -1,19 +1,11 @@
 {
   "users": [
     {
-      "username": "d",
-      "password": "1"
-    },
-    {
       "username": "Divyanshi",
-      "password": "12345678"
+      "password": "123456"
     },
     {
-
       "username": "JiyaKumari",
-
-      "username": "divyanshi",
-
       "password": "12345678"
     }
   ],
@@ -202,4 +194,5 @@
       }
     ]
   }
+>>>>>>> theirs
 }

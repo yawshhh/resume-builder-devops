@@ -142,7 +142,6 @@ body {
         <button class="create-btn" onclick="openBuilder()">Create New</button>
       </section>
     </div>
-
     <div id="resumes-section" style="display:none;">
       <section class="section">
         <h3>Your Recent Resumes</h3>
@@ -150,7 +149,6 @@ body {
         <div id="resumeList" style="margin-top: 15px;"></div>
       </section>
     </div>
-
     <div id="profile-section" style="display:none;">
       <section class="section">
         <h3>User Profile</h3>
@@ -172,7 +170,7 @@ function showSection(section) {
 
   if (section === 'resumes') {
     // load resumes when navigating to My Resumes
-    loadResumes();
+    loadDashboardResumes();
   } else if (section === 'profile') {
     // load profile data
     let user = localStorage.getItem("loggedInUser");
@@ -191,7 +189,7 @@ function logout() {
   window.location.href = "index.html";
 }
 
-async function loadResumes() {
+async function loadDashboardResumes() {
   let user = localStorage.getItem("loggedInUser");
   
   let html = "";
@@ -213,7 +211,7 @@ async function loadResumes() {
   }
 
   if (resumesList.length === 0) {
-    html = "<p style='color:#777;font-style:italic;'>No resumes made yet. Create one!</p>";
+    html = "<p style='color:#777;font-style:italic;'>No resumes found. Start creating one!</p>";
   } else {
     // Generate HTML for each resume (newest first)
     [...resumesList].reverse().forEach((resumeData, i) => {
@@ -247,18 +245,18 @@ function viewActiveResume(index) {
   window.location.href = "preview.html";
 }
 
-window.onload = function () {
+document.addEventListener('DOMContentLoaded', () => {
   let user = localStorage.getItem("loggedInUser");
 
   if (!user) {
     alert("Please login first!");
-    window.location.href = "index.html";
+    window.location.href = "resume.html";
   } else {
     document.getElementById("welcomeUser").innerText = "Welcome, " + user;
     // Show home section by default
     showSection('home');
   }
-};
+});
 </script>
 <script src="data.js"></script>
 <script src="script.js"></script>
